@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="英语自然拼读学习工具：看音素、听发音、跟读练习、闪卡记忆。">
+<title>自然拼读 Phonics · 英语发音学习</title>
+<link rel="stylesheet" href="css/style.css?v=4">
+</head>
+<body>
+
+<header class="app-header">
+  <div class="app-header__inner">
+    <div class="brand">
+      <div class="brand__mark" aria-hidden="true">Ph</div>
+      <div class="brand__text">
+        <h1 class="brand__title">自然拼读</h1>
+        <p class="brand__sub">Phonics · 看音素 · 听发音 · 跟读练习</p>
+      </div>
+    </div>
+
+    <div class="settings">
+      <div class="segmented" id="accent-switch" role="group" aria-label="口音选择"></div>
+      <label class="rate">
+        <span class="rate__label">发音</span>
+        <select id="source-select" aria-label="发音来源"></select>
+      </label>
+      <label class="rate">
+        <span class="rate__label">语速</span>
+        <select id="rate-select" aria-label="语速选择"></select>
+      </label>
+      <button class="btn btn--ghost btn--sm" type="button" id="diag-btn">发音自检</button>
+    </div>
+  </div>
+
+  <nav class="tabs" id="tabs" role="tablist" aria-label="功能导航"></nav>
+</header>
+
+<div class="banner" id="support-banner" hidden></div>
+
+<div class="boot-tip" id="boot-tip" hidden>
+  <h2>页面脚本没有加载成功</h2>
+  <p>如果你是通过<strong>双击打开</strong>本文件的，浏览器出于安全策略会阻止加载外部 ES Module，这是正常现象。两种解决办法：</p>
+  <ol>
+    <li>改双击同一目录下的 <code>phonics-standalone.html</code>（单文件版，双击即用）；</li>
+    <li>或在本目录起一个本地服务器后访问 <code>index.html</code>，例如：<code>python -m http.server 8080</code>，再打开 <code>http://localhost:8080/</code>。</li>
+  </ol>
+</div>
+
+<main class="app-main" id="main"></main>
+
+<footer class="app-footer">
+  <p>发音优先使用浏览器内置语音合成（Web Speech API），系统没有语音包时自动改用在线 TTS 兜底。</p>
+  <p>发音逻辑已独立成 js/speech.js 模块，接口保持不变即可整体替换为腾讯云 TTS。</p>
+</footer>
+
+<div class="toast-host" id="toast-host" aria-live="polite"></div>
+
+<script>
+  // 双击打开 index.html 时 ES Module 会被浏览器拦截，这里给出可读的提示，避免看到空白页
+  window.__phonicsBooted = false;
+  window.addEventListener('load', function () {
+    setTimeout(function () {
+      if (window.__phonicsBooted) return;
+      var tip = document.getElementById('boot-tip');
+      if (tip) tip.hidden = false;
+    }, 1200);
+  });
+</script>
+
+<script type="module" src="js/app.js?v=4"></script>
+
+</body>
+</html>
